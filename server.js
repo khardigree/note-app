@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-//routes
+// Get all notes
 app.get("/api/notes", (req, res) => {
   fs.readFile("./db/db.json", "utf8", (err, data) => {
     if (err) {
@@ -21,6 +21,7 @@ app.get("/api/notes", (req, res) => {
   });
 });
 
+// Save a new note
 app.post("/api/notes", (req, res) => {
   const newNote = req.body;
   newNote.id = uuidv4();
@@ -41,6 +42,7 @@ app.post("/api/notes", (req, res) => {
   });
 });
 
+// Delete a note
 app.delete("/api/notes/:id", (req, res) => {
   const id = req.params.id;
   fs.readFile("./db/db.json", "utf8", (err, data) => {
@@ -60,7 +62,7 @@ app.delete("/api/notes/:id", (req, res) => {
   });
 });
 
-//HTML
+// HTML Routes
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "public/notes.html"));
 });
